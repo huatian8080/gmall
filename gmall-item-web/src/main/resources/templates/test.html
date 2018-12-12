@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <div th:text="${hello}">我是div标签</div><br>
+    <div th:if="1!=1">判断成功</div>
+    <div th:text="${num}=='10'?'开启':'关闭'"></div><br>
+    <div th:each="a:${list}" th:text="${a}"></div><br>
+    <div th:each="string:${list}">
+        <input type="text" th:value="${string}" value="111111"/>
+    </div>
+    <a th:href="'javascript:a(\''+${name}+'\')'">调用a函数</a>
+
+    <script>
+        function a(name) {
+            alert(name);
+        }
+    </script>
+</body>
+</html>

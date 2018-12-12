@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.huatian.gmall.manage.mapper.SkuSaleAttrValueMapper">
+
+    <select id="selectSkuAttrValueListBySpuId" resultMap="selectSkuAttrValueListBySpuIdMap">
+        SELECT
+            info.id sku_id,
+            skv.id skv_id,
+            info.*, skv.*
+        FROM
+            sku_info info,
+            sku_sale_attr_value skv
+        WHERE
+            info.id = skv.sku_id
+        AND info.spu_id = #{spuId}
+    </select>
+
+    <resultMap id="selectSkuAttrValueListBySpuIdMap" type="com.huatian.gmall.bean.SkuInfo" autoMapping="true">
+
+        <result column="sku_id" property="id"></result>
+
+        <collection property="skuSaleAttrValueList" ofType="com.huatian.gmall.bean.SkuSaleAttrValue" autoMapping="true">
+            <result column="skv_id" property="id"></result>
+        </collection>
+
+    </resultMap>
+
+
+</mapper>

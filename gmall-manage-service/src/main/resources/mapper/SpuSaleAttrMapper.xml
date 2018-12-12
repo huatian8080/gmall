@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.huatian.gmall.manage.mapper.SpuSaleAttrMapper">
+
+    <select id="selectSpuSaleAttrListBySpuId" resultMap="selectSpuSaleAttrListBySpuIdMap">
+        SELECT
+            sa.id AS sa_id,
+            sav.id AS sav_id,
+            sa.*, sav.*,
+            if(skv.sku_id,1,0) as isChecked
+        FROM
+            spu_sale_attr sa
+            INNER JOIN spu_sale_attr_value sav
+        ON sa.sale_attr_id = sav.sale_attr_id
+        AND sa.spu_id = sav.spu_id
+        AND sa.spu_id = #{param2}
+        LEFT JOIN sku_sale_attr_value skv
+        ON skv.sale_attr_id = sa.sale_attr_id
+        and skv.sale_attr_value_id = sav.id
+        AND skv.sku_id = #{param1} order by sav.sale_attr_id,sav.sale_attr_value_name
+    </select>
+
+    <resultMap id="selectSpuSaleAttrListBySpuIdMap" type="com.huatian.gmall.bean.SpuSaleAttr" autoMapping="true">
+
+        <result column="sa_id" property="id"></result>
+
+        <collection property="spuSaleAttrValueList" ofType="com.huatian.gmall.bean.SpuSaleAttrValue" autoMapping="true">
+            <result column="sav_id" property="id"></result>
+        </collection>
+
+    </resultMap>
+
+
+</mapper>

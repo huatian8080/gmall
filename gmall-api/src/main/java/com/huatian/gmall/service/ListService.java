@@ -8,4 +8,6 @@ import java.util.List;
 
 public interface ListService {
     List<SkuLsInfo> search(SkuLsParam skuLsParam);
+
+    void saveSkuLsInfoToList(SkuLsInfo skuLsInfo);
 }

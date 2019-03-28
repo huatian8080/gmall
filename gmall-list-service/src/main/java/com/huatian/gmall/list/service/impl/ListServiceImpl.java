@@ -6,6 +6,7 @@ import com.huatian.gmall.bean.SkuLsParam;
 import com.huatian.gmall.bean.SkuLsResult;
 import com.huatian.gmall.service.ListService;
 import io.searchbox.client.JestClient;
+import io.searchbox.core.Index;
 import io.searchbox.core.Search;
 import io.searchbox.core.SearchResult;
 import org.apache.commons.lang3.StringUtils;
@@ -25,6 +26,8 @@ public class ListServiceImpl implements ListService {
 
     @Autowired
     JestClient jestClient;
+
+
 
     @Override
     public List<SkuLsInfo> search(SkuLsParam skuLsParam) {
@@ -53,6 +56,18 @@ public class ListServiceImpl implements ListService {
         }
         return skuLsInfoList;
     }
+
+    @Override
+    public void saveSkuLsInfoToList(SkuLsInfo skuLsInfo) {
+        try {
+            Index build = new Index.Builder(skuLsInfo).index("gmall").type("SkuLsInfo").
+                    id(skuLsInfo.getId()).build();
+            jestClient.execute(build);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
     public String getMyDsl(SkuLsParam skuLsParam){
         SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
         //bool

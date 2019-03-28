@@ -1,7 +1,8 @@
 package com.huatian.gmall.user.controller;
 
 import com.alibaba.dubbo.config.annotation.Reference;
-import com.huatian.gmall.service.UserInfoService;
+import com.huatian.gmall.bean.UserInfo;
+import com.huatian.gmall.service.UserService;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -11,7 +12,7 @@ import java.util.List;
 public class UserController {
 
     @Reference
-    UserInfoService userService;
+    UserService userService;
 
     @RequestMapping("/userList")
     public List<UserInfo> userList(){

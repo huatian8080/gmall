@@ -5,7 +5,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.ComponentScan;
 import tk.mybatis.spring.annotation.MapperScan;
 
-@ComponentScan("com.huatian.gmall.utils")
+@ComponentScan("com.huatian.gmall")
 @SpringBootApplication
 @MapperScan("com.huatian.gmall.cart.mapper")
 public class GmallCartServiceApplication {

@@ -1,21 +1,22 @@
 package com.huatian.gmall.manage.service.impl;
 
+import com.alibaba.dubbo.config.annotation.Reference;
 import com.alibaba.dubbo.config.annotation.Service;
 import com.alibaba.fastjson.JSON;
-import com.huatian.gmall.bean.SkuAttrValue;
-import com.huatian.gmall.bean.SkuImage;
-import com.huatian.gmall.bean.SkuInfo;
-import com.huatian.gmall.bean.SkuSaleAttrValue;
+import com.huatian.gmall.bean.*;
 import com.huatian.gmall.manage.mapper.SkuAttrValueMapper;
 import com.huatian.gmall.manage.mapper.SkuImageMapper;
 import com.huatian.gmall.manage.mapper.SkuInfoMapper;
 import com.huatian.gmall.manage.mapper.SkuSaleAttrValueMapper;
+import com.huatian.gmall.service.ListService;
 import com.huatian.gmall.service.SkuService;
 import com.huatian.gmall.utils.RedisUtil;
+import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import redis.clients.jedis.Jedis;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 
 @Service
@@ -30,6 +31,8 @@ public class SkuServiceImpl implements SkuService {
     SkuImageMapper skuImageMapper;
     @Autowired
     RedisUtil redisUtil;
+    @Reference
+    ListService listService;
 
 
 
@@ -62,6 +65,15 @@ public class SkuServiceImpl implements SkuService {
             skuImage.setSkuId(skuId);
             skuImageMapper.insertSelective(skuImage);
         }
+        SkuLsInfo skuLsInfo = new SkuLsInfo();
+        try {
+            BeanUtils.copyProperties(skuLsInfo,skuInfo);
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        } catch (InvocationTargetException e) {
+            e.printStackTrace();
+        }
+        listService.saveSkuLsInfoToList(skuLsInfo);
     }
 
     @Override

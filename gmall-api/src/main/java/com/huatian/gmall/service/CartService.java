@@ -14,4 +14,11 @@ public interface CartService {
     void flushCache(String userId);
 
     List<CartInfo> getCartListFromCache(String userId);
+
+    List<CartInfo> getCartListFromUserId(String userId);
+
+
+    void updateAllCart(String userId,String isAllCheckFlag);
+
+    void conbineCart(String id, List<CartInfo> cartInfos);
 }
